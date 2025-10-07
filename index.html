@@ -4,6 +4,19 @@
   <link rel="icon" href="title.png" type="image/x-icon">
   <link rel="stylesheet" type="text/css" href="All.css">
   <style type="text/css">
+    /* Hide visible scrollbar but keep scrolling functionality */
+    .hide-scroll {
+      overflow: auto;               /* allow scrolling */
+      -ms-overflow-style: none;     /* IE and Edge */
+      scrollbar-width: none;        /* Firefox */
+      -webkit-overflow-scrolling: touch; /* smooth scroll on iOS */
+    }
+    .hide-scroll::-webkit-scrollbar {
+      display: none;                /* Chrome, Safari, Edge (WebKit/Blink) */
+      width: 0;
+      height: 0;
+    }
+
     .bsod_bg {
       cursor: none;
       display: none;
@@ -53,7 +66,8 @@
   </style>
 </head>
 
-<body>
+<!-- APPLY the hide-scroll class to body so scrollbar is hidden but scrolling still works -->
+<body class="hide-scroll">
 <center>
   <h2>GenSod</h2>
   <h3>SoD simulator</h3>
@@ -258,10 +272,19 @@ window.onload = function() {
         });
     }
   });
+
+  // Disable right-click on the BSOD screen only (move inside onload to ensure element exists)
+  var bsodEl = document.getElementById("bsod");
+  if (bsodEl) {
+    bsodEl.addEventListener("contextmenu", function (e) {
+      e.preventDefault();
+    });
+  }
 };
 
-// Disable right-click on the BSOD screen only
-document.getElementById("bsod").addEventListener("contextmenu", function (e) {
-  e.preventDefault();
-});
+// (optional) If you ever want to toggle the hidden scrollbar at runtime you can:
+// document.body.classList.remove('hide-scroll'); // show scrollbar again
+// document.body.classList.add('hide-scroll');    // hide scrollbar
 </script>
+</body>
+</html>
